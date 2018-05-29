@@ -74,6 +74,7 @@ function checkForLetter(Arr, char) { //check if users letter exists in word[]
     if(beenUsed(char)) { //check if letter has been used already
         return log(`'${char}' has already been used! ${userInput.join(' ')}`);
     }else{
+        guessesLeft--;
         userInput.push(char);
         // log(`User Input: ${userInput}`);
         Arr.forEach((ltr, idx) => {
@@ -91,7 +92,6 @@ function checkForLetter(Arr, char) { //check if users letter exists in word[]
 }
 
 function game(char) { //this runs the game from the event handler
-    guessesLeft--;
     let wordChecked = checkForLetter(word, char); // an array of booleans indicating whether the word contains a specific letter
     let done = checkComplete();
     if(done) {
