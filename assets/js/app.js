@@ -39,11 +39,12 @@ function pickWord() { //picks a random word and initializes the array
         word.push(choice[i]);
         unsolved.push('_');
     }
-    unsolvedDiv.text(unsolved.join(' '));
-    userInputDiv.text(userInput.join(' '));
-    userScoreDiv.text(score);
-    userStreakDiv.text(streak);
-    guessesLeftDiv.text(guessesLeft);
+    display();
+    // unsolvedDiv.text(unsolved.join(' '));
+    // userInputDiv.text(userInput.join(' '));
+    // userScoreDiv.text(score);
+    // userStreakDiv.text(streak);
+    // guessesLeftDiv.text(guessesLeft);
     //log(word)  
 }
 
@@ -61,16 +62,6 @@ function checkComplete() { //checks if the word has been completed
 function checkForLetter(Arr, char) { //check if users letter exists in word[]
     let checked = [];
     let userGuesses = userInput.length;
-    if(userGuesses === 11 && !checkComplete()) {
-        score = 0;
-        streak = 0;
-        guessesLeft = 11;
-        pickWord();
-        userInputDiv.text(userInput.join(' '));
-        unsolvedDiv.text(unsolved.join(' '));
-        userScoreDiv.text(score);
-        return alert('Too many guesses! Better luck next time!');
-    }
     if(beenUsed(char)) { //check if letter has been used already
         return log(`'${char}' has already been used! ${userInput.join(' ')}`);
     }else{
@@ -84,10 +75,7 @@ function checkForLetter(Arr, char) { //check if users letter exists in word[]
             }
         });  
     }
-    guessesLeftDiv.text(guessesLeft);
-    userInputDiv.text(userInput.join(' '));
-    unsolvedDiv.text(unsolved.join(' '));
-    userScoreDiv.text(score);
+    display();
     
 }
 
@@ -99,7 +87,26 @@ function game(char) { //this runs the game from the event handler
         guessesLeft = 11;
         streak++;
         pickWord();
+    } else if(!done && userInput.length >= 11) {
+        score = 0;
+        streak = 0;
+        guessesLeft = 11;
+        pickWord();
+        display();
+        // userInputDiv.text(userInput.join(' '));
+        // unsolvedDiv.text(unsolved.join(' '));
+        // userScoreDiv.text(score);
+        return alert('Too many guesses! Better luck next time!');
     }
+}
+
+
+function display() {
+    guessesLeftDiv.text(guessesLeft);
+    userInputDiv.text(userInput.join(' '));
+    unsolvedDiv.text(unsolved.join(' '));
+    userScoreDiv.text(score);
+    userStreakDiv.text(streak);
 }
 
 document.onkeyup = function (e) { //event handler
