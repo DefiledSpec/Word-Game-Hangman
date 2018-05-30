@@ -7,50 +7,24 @@ let started = false;
 
 let userInput = [];
 
-let unsolvedDiv = $('#unsolved');
-let userInputDiv = $('#userInput');
-let userScoreDiv = $('#userScore');
-let userStreakDiv = $('#userStreak');
-let startMessageDiv = $('#startMessage');
-let guessesLeftDiv = $('#guessesLeft');
+let word, unsolved;
+let words = ['blue', 'yellow', 'red', 'green', 'orange', 'teal', 'gray', 'magenta', 'purple', 'pink'];
 
-let word;
-let unsolved;
-let words = [
-    'blue',
-    'yellow',
-    'red',
-    'green',
-    'orange',
-    'teal',
-    'gray',
-    'magenta',
-    'purple',
-    'pink'
-]
+let beenUsed = a => { //bool to determine if a letter has already been used
+    let usedLetter = userInput.indexOf(a);
+    return (usedLetter >= 0) ? true : false;
+}
 
 function pickWord() { //picks a random word and initializes the array
     let choice = words[Math.floor(Math.random() * words.length)];
     word = [];
     unsolved = [];
     userInput = [];
-    
     for(let i = 0; i < choice.length; i++) {
         word.push(choice[i]);
         unsolved.push('_');
     }
     display();
-    // unsolvedDiv.text(unsolved.join(' '));
-    // userInputDiv.text(userInput.join(' '));
-    // userScoreDiv.text(score);
-    // userStreakDiv.text(streak);
-    // guessesLeftDiv.text(guessesLeft);
-    //log(word)  
-}
-
-let beenUsed = a => { //bool to determine if a letter has already been used
-    let usedLetter = userInput.indexOf(a);
-    return (usedLetter >= 0) ? true : false;
 }
 
 function checkComplete() { //checks if the word has been completed
@@ -76,7 +50,6 @@ function checkForLetter(Arr, char) { //check if users letter exists in word[]
         });  
     }
     display();
-    
 }
 
 function game(char) { //this runs the game from the event handler
@@ -93,20 +66,16 @@ function game(char) { //this runs the game from the event handler
         guessesLeft = 11;
         pickWord();
         display();
-        // userInputDiv.text(userInput.join(' '));
-        // unsolvedDiv.text(unsolved.join(' '));
-        // userScoreDiv.text(score);
         return alert('Too many guesses! Better luck next time!');
     }
 }
 
-
-function display() {
-    guessesLeftDiv.text(guessesLeft);
-    userInputDiv.text(userInput.join(' '));
-    unsolvedDiv.text(unsolved.join(' '));
-    userScoreDiv.text(score);
-    userStreakDiv.text(streak);
+function display() { //handler for displaying to the html
+    $('#guessesLeft').text(guessesLeft);
+    $('#userInput').text(userInput.join(' '));
+    $('#unsolved').text(unsolved.join(' '));
+    $('#userScore').text(score);
+    $('#userStreak').text(streak);
 }
 
 document.onkeyup = function (e) { //event handler
@@ -119,7 +88,7 @@ document.onkeyup = function (e) { //event handler
             log(`${key} ${code} is not a letter`);
         }
     }else{        
-        startMessageDiv.text('')
+        $('#startMessage').text('')
         started = true;
         pickWord();
     }
