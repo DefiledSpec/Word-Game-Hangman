@@ -1,4 +1,5 @@
 const log = console.log;
+
 let score = 0;
 let streak = 0;
 let guessesLeft = 11;
@@ -41,7 +42,6 @@ function checkForLetter(Arr, char) { //check if users letter exists in word[]
     }else{
         guessesLeft--;
         userInput.push(char);
-        // log(`User Input: ${userInput}`);
         Arr.forEach((ltr, idx) => {
             if(ltr === char) {
                 unsolved.splice(idx, 1, char);
@@ -88,8 +88,9 @@ document.onkeyup = function (e) { //event handler
             log(`${key} ${code} is not a letter`);
         }
     }else{        
-        $('#startMessage').text('')
+        $('#startMessage').text('');
         started = true;
         pickWord();
     }
 };
+pickWord();
